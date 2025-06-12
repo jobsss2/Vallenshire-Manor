@@ -372,7 +372,7 @@
     </div>
 
     <script>
-        // 페이지 로드 시 애니메이션 효과
+        
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.sister-card');
             
@@ -386,8 +386,6 @@
                     card.style.transform = 'translateY(0)';
                 }, index * 200);
             });
-
-            // 마우스 이동에 따른 미묘한 효과
             document.addEventListener('mousemove', function(e) {
                 const mouseX = e.clientX / window.innerWidth;
                 const mouseY = e.clientY / window.innerHeight;
