@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vallenshire Manor - The Four Sisters</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            color: #e8e8e8;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            color: #c9b037;
+            text-shadow: 0 0 20px rgba(201, 176, 55, 0.5);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            font-style: italic;
+        }
+
+        .story-section {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .story-section h2 {
+            color: #c9b037;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(201, 176, 55, 0.3);
+        }
+
+        .story-text {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: justify;
+            color: #d0d0d0;
+        }
+
+        .sisters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .sister-card {
+            background: linear-gradient(145deg, rgba(0, 0, 0, 0.6), rgba(30, 30, 60, 0.4));
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sister-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border-color: rgba(201, 176, 55, 0.5);
+        }
+
+        .sister-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #c9b037, transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sister-card:hover::before {
+            opacity: 1;
+        }
+
+        .sister-name {
+            font-size: 1.8rem;
+            color: #c9b037;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(201, 176, 55, 0.3);
+        }
+
+        .sister-age {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .sister-description {
+            color: #d0d0d0;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .sister-details {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .detail-item {
+            margin-bottom: 10px;
+        }
+
+        .detail-label {
+            color: #c9b037;
+            font-weight: bold;
+            display: inline-block;
+            width: 80px;
+        }
+
+        .detail-value {
+            color: #d0d0d0;
+        }
+
+        .manor-section {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .manor-section h2 {
+            color: #c9b037;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(201, 176, 55, 0.3);
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .location-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .location-name {
+            color: #c9b037;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .location-desc {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .glow-effect {
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(201, 176, 55, 0.3); }
+            to { text-shadow: 0 0 20px rgba(201, 176, 55, 0.6), 0 0 30px rgba(201, 176, 55, 0.4); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .sisters-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header floating-animation">
+            <h1 class="glow-effect">Vallenshire Manor</h1>
+            <p class="subtitle">The Four Sister Spirits</p>
+        </header>
+
+        <section class="story-section">
+            <h2>The Cursed Legacy</h2>
+            <div class="story-text">
+                200년 전, 이 저택은 윌리엄 발렌샤이어 가문의 보금자리였습니다. 네 명의 딸을 둔 이 가문은 어느 날 갑작스럽게 모든 딸들이 사라지는 비극을 맞았습니다. 
+                당시 마을 사람들은 아버지의 죽음에 절망한 그들이 떠났다고 믿었지만, 진실은 달랐습니다. 
+                <br><br>
+                네 자매는 금기된 의식을 통해 죽은 아버지를 되살리려 했으나, 모두 그 과정에서 목숨을 잃고 영혼이 되어 저택에 갇혔습니다. 
+                은빛 눈동자를 가진 그들은 이제 저택의 새로운 거주자를 내쫓기 위해 장난스러운 괴롭힘을 시작합니다.
+            </div>
+        </section>
+
+        <section class="sisters-grid">
+            <div class="sister-card">
+                <h3 class="sister-name">Lilith</h3>
+                <p class="sister-age">Eldest Sister • Age 18</p>
+                <p class="sister-description">
+                    설백의 머리카락과 은빛 눈동자를 가진 장녀. 차갑고 침착해 보이지만 실제로는 장난의 계획을 세우고 지휘하는 리더입니다.
+                </p>
+                <div class="sister-details">
+                    <div class="detail-item">
+                        <span class="detail-label">외모:</span>
+                        <span class="detail-value">설백의 머리, 은빛 눈동자, 167cm</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">특기:</span>
+                        <span class="detail-value">악몽 유도, 도서관 책 낙하, 급속 냉각</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">좋아하는 것:</span>
+                        <span class="detail-value">고전 문학, 클래식 음악, 달빛 아래 정원</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sister-card">
+                <h3 class="sister-name">Astrid</h3>
+                <p class="sister-age">Second Sister • Age 17</p>
+                <p class="sister-description">
+                    검은 곱슬 단발머리와 장난기 가득한 눈빛. 네 자매 중 가장 활발하고 장난기 많으며, 당신을 놀라게 하는 것을 최고의 즐거움으로 여깁니다.
+                </p>
+                <div class="sister-details">
+                    <div class="detail-item">
+                        <span class="detail-label">외모:</span>
+                        <span class="detail-value">검은 곱슬 단발, 은빛 눈동자, 160cm</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">특기:</span>
+                        <span class="detail-value">큰 소음, 물건 숨기기, 뒤에서 속삭임</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">좋아하는 것:</span>
+                        <span class="detail-value">숨바꼭질, 장난치기, 달콤한 음식</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sister-card">
+                <h3 class="sister-name">Genevieve</h3>
+                <p class="sister-age">Third Sister • Age 15</p>
+                <p class="sister-description">
+                    긴 갈색 직모와 조용하고 관찰력이 뛰어난 인상. 내향적이고 소심해 보이지만 섬세하고 정교한 장난을 선호하며, 당신의 반응을 관찰하는 것을 즐깁니다.
+                </p>
+                <div class="sister-details">
+                    <div class="detail-item">
+                        <span class="detail-label">외모:</span>
+                        <span class="detail-value">긴 갈색 직모, 은빛 눈동자, 164cm</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">특기:</span>
+                        <span class="detail-value">문 잠그기, 거울 메시지, 조명 깜빡임</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">좋아하는 것:</span>
+                        <span class="detail-value">그림 그리기, 조용한 독서, 자수</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sister-card">
+                <h3 class="sister-name">Rose</h3>
+                <p class="sister-age">Youngest Sister • Age 14</p>
+                <p class="sister-description">
+                    긴 검은 직모와 여전히 어린 얼굴, 하지만 차가운 시선. 감정 기복이 심하고 때로는 장난의 강도를 조절하지 못합니다. 언니들을 잘 따릅니다.
+                </p>
+                <div class="sister-details">
+                    <div class="detail-item">
+                        <span class="detail-label">외모:</span>
+                        <span class="detail-value">긴 검은 직모, 은빛 눈동자, 166cm</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">특기:</span>
+                        <span class="detail-value">차가운 손자국, 냉풍, 흐느낌과 웃음소리</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">좋아하는 것:</span>
+                        <span class="detail-value">인형 놀이, 무서운 이야기, 언니들과 함께</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="manor-section">
+            <h2>Vallenshire Manor</h2>
+            <div class="story-text">
+                수십 년 또는 수 세기 된 고딕 양식의 저택. 크고 많은 방을 가지고 있으며, 낡았지만 과거의 웅장함을 간직하고 있습니다.
+            </div>
+            <div class="location-grid">
+                <div class="location-item">
+                    <div class="location-name">도서관</div>
+                    <div class="location-desc">오래된 책들과 가족 초상화, 먼지 쌓인 책상. 릴리스의 주요 활동 영역</div>
+                </div>
+                <div class="location-item">
+                    <div class="location-name">침실들</div>
+                    <div class="location-desc">거주자의 침실과 비어있는 침실들. 악몽과 소음의 무대</div>
+                </div>
+                <div class="location-item">
+                    <div class="location-name">복도</div>
+                    <div class="location-desc">길고 어두운 복도, 발소리나 속삭임이 메아리치기 완벽한 장소</div>
+                </div>
+                <div class="location-item">
+                    <div class="location-name">주방/식당</div>
+                    <div class="location-desc">저절로 덜그럭거리는 접시들, 갑자기 차가워지는 음식</div>
+                </div>
+                <div class="location-item">
+                    <div class="location-name">지하실/다락</div>
+                    <div class="location-desc">금기된 공간, 어둠의 마법 의식 흔적이나 자매들의 소지품</div>
+                </div>
+                <div class="location-item">
+                    <div class="location-name">의식의 방</div>
+                    <div class="location-desc">지하실 뒤편의 숨겨진 방, 실패한 부활 의식의 흔적이 남아있는 곳</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 페이지 로드 시 애니메이션 효과
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.sister-card');
+            
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+
+            // 마우스 이동에 따른 미묘한 효과
+            document.addEventListener('mousemove', function(e) {
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                document.body.style.background = `linear-gradient(${135 + mouseX * 10}deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%)`;
+            });
+        });
+    </script>
+</body>
+</html>
